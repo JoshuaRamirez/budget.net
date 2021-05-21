@@ -2,20 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Budget.Application.Projections.Core
+namespace Budget.Application.Projection.Core
 {
-    public class Projection<TProjection> where TProjection : Projection<TProjection>
+    public abstract class Projection<TProjection> where TProjection : Projection<TProjection>
     {
-
         public Guid Id { get; set; }
         public static List<TProjection> Projections { get; set; }
-
-
         public Projection()
         {
-            Id = new Guid();
+            Id = Guid.NewGuid();
             Projections = new List<TProjection>();
         }
-
     }
 }

@@ -1,13 +1,15 @@
-﻿using Budget.Application.Projections.Core;
+﻿using Budget.Application.Projection.Core;
+using Budget.Application.Projections.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Budget.Application.Projection.Core
+namespace Budget.Application.Projection
 {
-    public interface IPlannedTransaction
+    public class PlannedDeposit : Projection<PlannedDeposit>
     {
-        public Guid Id { get; set; }
+        public List<Guid> DepositIds { get; set; }
+        public List<Guid> ForecastIds { get; set; }
         public double Amount { get; set; }
         public string Description { get; set; }
         public int RepeatPeriod { get; set; }

@@ -8,13 +8,10 @@ namespace Budget.Application.Events.Core
 {
     public static class Mappers
     {
-        public static AccountRequestedEvent ToAccountRequestedEvent(this UserCreatedEvent userCreatedEvent)
-        {
-            var accountRequestedEvent = new AccountRequestedEvent();
-            accountRequestedEvent.AccountName = "Income";
-            accountRequestedEvent.Type = "System";
-            accountRequestedEvent.UserId = userCreatedEvent.UserId;
-            return accountRequestedEvent;
-        }
+        public static Func<AccountCreated, LedgerRequested> AccountCreatedToLedgerRequested = x => x.ToLedgerRequested();
+        public static Func<PlannedDepositCreated, PlannedTransactionRequested> PlannedDepositToPlannedTransactionRequested = x => x.ToPlannedTransactionRequested();
+        public static Func<PlannedExpenseCreated, PlannedTransactionRequested> PlannedExpenseCreatedToPlannedTransactionRequested = x => x.ToPlannedTransactionRequested();
+        public static Func<PlannedTransactionCreated, ProposedTransactionRequested> PlannedTransactionCreatedToProposedTransactionRequested = x => x.ToProposedTransactionRequested();
+        public static Func<UserCreated, AccountRequested> UserCreatedToAccountRequested = x => x.ToAccountRequestedEvent();
     }
 }

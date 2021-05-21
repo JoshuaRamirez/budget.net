@@ -1,29 +1,29 @@
 ﻿using Budget.Application.Events.Core;
 using Budget.Application.Events.Created;
 using Budget.Application.Events.Requested.Creation;
-using Budget.Application.Projections;
+using Budget.Application.Projection;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Budget.Application.Services.Creates
 {
-    public class CreateUserService : Receiver<UserRequestedEvent>
+    public class CreateUserService : Receiver<UserRequested>
     {
         public CreateUserService()
         {
-            UserRequestedEvent.Subscribe(this);
+            UserRequested.Subscribe(this);
         }
-        public override void Serve(UserRequestedEvent @event)
+        public override void Serve(UserRequested @event)
         {
             // Create UserProjection
-            var userProjection = new UserProjection();
+            var userProjection = new User();
             userProjection.UserName = @event.UserName;
-            UserProjection.Projections.Add(userProjection);
+            User.Projections.Add(userProjection);
             // Publish UserCreatedEvent
-            var userCreatedEvent = new UserCreatedEvent();
+            var userCreatedEvent = new UserCreated();
             userCreatedEvent.UserId = userProjection.Id;
-            UserCreatedEvent.Publish(userCreatedEvent);
+            UserCreated.Publish(userCreatedEvent);
         }
     }
 }

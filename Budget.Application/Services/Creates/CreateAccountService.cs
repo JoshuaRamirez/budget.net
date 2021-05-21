@@ -1,30 +1,30 @@
 ﻿using Budget.Application.Events.Core;
 using Budget.Application.Events.Created;
 using Budget.Application.Events.Requested.Creation;
-using Budget.Application.Projections;
+using Budget.Application.Projection;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Budget.Application.Services.Creates
 {
-    public class CreateAccountService : Receiver<AccountRequestedEvent>
+    public class CreateAccountService : Receiver<AccountRequested>
     {
         public CreateAccountService()
         {
-            AccountRequestedEvent.Subscribe(this);
+            AccountRequested.Subscribe(this);
         }
-        public override void Serve(AccountRequestedEvent @event)
+        public override void Serve(AccountRequested @event)
         {
             // Create AccountProjection
-            var accountProjection = new AccountProjection();
+            var accountProjection = new Account();
             accountProjection.AccountName = @event.AccountName;
             accountProjection.UserId = @event.UserId;
-            AccountProjection.Projections.Add(accountProjection);
+            Account.Projections.Add(accountProjection);
             // Publish AccountCreatedEvent
-            var accountCreated = new AccountCreatedEvent();
+            var accountCreated = new AccountCreated();
             accountCreated.AccountId = accountProjection.Id;
-            AccountCreatedEvent.Publish(accountCreated);
+            AccountCreated.Publish(accountCreated);
         }
     }
 }

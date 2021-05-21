@@ -22,6 +22,12 @@ namespace Budget.Application.Events.Core
         public Guid Id { get; set; }
         public Guid PublishingUserId { get; set; }
         public string EventName { get; set; }
+        public void Publish()
+        {
+            TEvent @event = (TEvent)this;
+            Event<TEvent>.Publish(@event);
+        }
+
         public static void Publish(TEvent @event)
         {
             store.Add(@event);
