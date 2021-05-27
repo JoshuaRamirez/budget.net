@@ -19,14 +19,14 @@ namespace Budget.Application.Services.Links
             return new List<Guid>() { @event.AccountId };
         }
 
-        internal override List<Guid> GetTargetIds(List<Account> sourceProjections)
+        internal override List<Guid> GetTargetIds(List<Account> sources)
         {
-            return new List<Guid>(sourceProjections.Select(x => x.UserId));
+            return new List<Guid>(sources.Select(x => x.UserId));
         }
 
-        internal override void Link(Account sourceProjection, User targetProjection)
+        internal override void Link(Account source, User target)
         {
-            targetProjection.AccountIds.Add(sourceProjection.Id);
+            target.AccountIds.Add(source.Id);
         }
     }
 }

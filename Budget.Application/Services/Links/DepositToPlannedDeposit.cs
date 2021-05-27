@@ -13,13 +13,13 @@ namespace Budget.Application.Services.Links
         {
             return Guids(@event.DepositId);
         }
-        internal override List<Guid> GetTargetIds(List<Deposit> sourceProjections)
+        internal override List<Guid> GetTargetIds(List<Deposit> sources)
         {
-            return Guids(sourceProjections.Select(x => x.PlannedDepositId));
+            return Guids(sources.Select(x => x.PlannedDepositId));
         }
-        internal override void Link(Deposit sourceProjection, PlannedDeposit targetProjection)
+        internal override void Link(Deposit source, PlannedDeposit target)
         {
-            targetProjection.DepositIds.Add(sourceProjection.Id);
+            target.DepositIds.Add(source.Id);
         }
     }
 }

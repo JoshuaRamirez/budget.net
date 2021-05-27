@@ -13,8 +13,8 @@ namespace Budget.Application.Services.Core
         where TTargetProjection : Projection<TTargetProjection>, new()
     {
         internal abstract List<Guid> GetSourceIds(TEvent @event);
-        internal abstract List<Guid> GetTargetIds(List<TSourceProjection> sourceProjections);
-        internal abstract void Link(TSourceProjection sourceProjection, TTargetProjection targetProjection);
+        internal abstract List<Guid> GetTargetIds(List<TSourceProjection> sources);
+        internal abstract void Link(TSourceProjection source, TTargetProjection target);
         internal List<Guid> Guids(Guid guid)
         {
             return new List<Guid>() { guid };
