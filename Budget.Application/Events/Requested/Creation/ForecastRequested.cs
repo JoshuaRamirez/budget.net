@@ -7,5 +7,11 @@ namespace Budget.Application.Events.Requested.Creation
 {
     public class ForecastRequested : Event<ForecastRequested>
     {
+        public double Amount { get; set; }
+        public Guid CategoryId { get; set; }
+        public DateTime Date { get; set; }
+        public string Notes { get; set; }
+        public Guid PlannedDepositIds { get; set; }
+        public Guid PlannedExpenseIds { get; set; }
     }
 }

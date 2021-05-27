@@ -7,7 +7,9 @@ namespace Budget.Application.Projection
 {
     public class Account : Projection<Account>
     {
-        public string AccountName { get; internal set; }
-        public Guid UserId { get; internal set; }
+        public Guid LedgerId { get; set; }
+        public Guid UserId { get; set; }
+        public string AccountName { get; set; }
+        public string Type { get; set; }
     }
 }

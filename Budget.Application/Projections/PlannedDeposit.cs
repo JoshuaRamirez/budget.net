@@ -8,6 +8,11 @@ namespace Budget.Application.Projection
 {
     public class PlannedDeposit : Projection<PlannedDeposit>
     {
+        public PlannedDeposit()
+        {
+            DepositIds = new List<Guid>();
+            ForecastIds = new List<Guid>();
+        }
         public List<Guid> DepositIds { get; set; }
         public List<Guid> ForecastIds { get; set; }
         public double Amount { get; set; }

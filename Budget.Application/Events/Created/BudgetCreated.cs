@@ -7,5 +7,6 @@ namespace Budget.Application.Events.Created
 {
     public class BudgetCreated: Event<BudgetCreated>
     {
+        public Guid BudgetId { get; set; }
     }
 }

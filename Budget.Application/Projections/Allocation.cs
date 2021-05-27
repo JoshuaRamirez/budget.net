@@ -7,5 +7,7 @@ namespace Budget.Application.Projection
 {
     public class Allocation : Projection<Allocation>
     {
+        public Guid LedgerId { get; set; }
+        public Guid TransactionId { get; set; }
     }
 }

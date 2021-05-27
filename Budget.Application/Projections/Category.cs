@@ -7,5 +7,7 @@ namespace Budget.Application.Projection
 {
     public class Category : Projection<Category>
     {
+        public string CategoryName { get; set; }
+        public string Type { get; set; }
     }
 }
