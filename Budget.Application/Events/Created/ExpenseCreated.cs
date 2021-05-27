@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Budget.Application.Events.Created
 {
-    public class ExpenseRequested: Event<ExpenseRequested>
+    public class ExpenseCreated: Event<ExpenseCreated>
     {
     }
 }
