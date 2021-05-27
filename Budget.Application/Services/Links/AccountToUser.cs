@@ -24,10 +24,9 @@ namespace Budget.Application.Services.Links
             return new List<Guid>(sourceProjections.Select(x => x.UserId));
         }
 
-        internal override void Link(Account targetProjection, User sourceProjection)
+        internal override void Link(Account sourceProjection, User targetProjection)
         {
-            sourceProjection.AccountIds.Add(targetProjection.Id);
-            targetProjection.UserId = sourceProjection.Id;
+            targetProjection.AccountIds.Add(sourceProjection.Id);
         }
     }
 }
