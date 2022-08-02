@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Budget.Application.Projections.Core
 {
-    public enum RepeatMeasurement
+    public enum Repetition
     {
         Seconds,
         Minutes,

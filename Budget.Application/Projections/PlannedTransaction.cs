@@ -16,7 +16,7 @@ namespace Budget.Application.Projection
         public string Description { get; set; }
         public DateTime Date { get; set; }
         public int RepeatPeriod { get; set; }
-        public RepeatMeasurement RepeatMeasurement { get; set; }
+        public Repetition RepeatMeasurement { get; set; }
         public int RepeatCount { get; set; }
         public List<Guid> ProposedTransactionIds { get; set; }
         public int TimesRepeated { get; set; }
