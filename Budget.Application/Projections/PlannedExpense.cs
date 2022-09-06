@@ -14,7 +14,7 @@ namespace Budget.Application.Projections
         }
         public List<Guid> ExpenseIds { get; set; }
         public List<Guid> ForecastIds { get; set; }
-        public double Amount { get; set; }
+        public decimal Amount { get; set; }
         public string Description { get; set; }
         public int RepeatPeriod { get; set; }
         public Repetition RepeatMeasurement { get; set; }

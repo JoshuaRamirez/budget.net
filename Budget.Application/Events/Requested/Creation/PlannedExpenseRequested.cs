@@ -8,7 +8,7 @@ namespace Budget.Application.Events.Requested.Creation
 {
     public class PlannedExpenseRequested : Event<PlannedExpenseRequested>
     {
-        public string Amount { get; set; }
+        public decimal Amount { get; set; }
         public string Description { get; set; }
         public int RepeatPeriod { get; set; }
         public Repetition RepeatMeasurement { get; set; }

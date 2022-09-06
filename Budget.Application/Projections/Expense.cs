@@ -12,7 +12,6 @@ namespace Budget.Application.Projections
         public Guid PayeeId { get; set; }
         public Guid PlannedExpenseId { get; set; }
         public Guid TransactionId { get; set; }
-        public double Amount { get; set; }
         public string Description { get; set; }
     }
 }
