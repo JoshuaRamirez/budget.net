@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Budget.Application.Projection.Core
+namespace Budget.Application.Projections.Core
 {
     public abstract class Projection<TProjection> where TProjection : Projection<TProjection>
     {

@@ -1,5 +1,5 @@
 using Budget.Application.Events.Core;
-using Budget.Application.Projection.Core;
+using Budget.Application.Projections.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;

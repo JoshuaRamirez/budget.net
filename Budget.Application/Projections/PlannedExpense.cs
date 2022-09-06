@@ -1,10 +1,9 @@
-﻿using Budget.Application.Projection.Core;
-using Budget.Application.Projections.Core;
+﻿using Budget.Application.Projections.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Budget.Application.Projection
+namespace Budget.Application.Projections
 {
     public class PlannedExpense : Projection<PlannedExpense>
     {

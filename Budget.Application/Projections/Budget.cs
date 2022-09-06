@@ -1,18 +1,18 @@
-﻿using Budget.Application.Projection.Core;
+﻿using Budget.Application.Projections.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Budget.Application.Projection
+namespace Budget.Application.Projections
 {
     public class Budget : Projection<Budget>
     {
         public Budget()
         {
-            this.DepositIds = new List<Guid>();
-            this.ExpenseIds = new List<Guid>();
-            this.SubBudgetIds = new List<Guid>();
-            this.SuperBudgetIds = new List<Guid>();
+            DepositIds = new List<Guid>();
+            ExpenseIds = new List<Guid>();
+            SubBudgetIds = new List<Guid>();
+            SuperBudgetIds = new List<Guid>();
         }
         public List<Guid> DepositIds { get; set; }
         public List<Guid> ExpenseIds { get; set; }

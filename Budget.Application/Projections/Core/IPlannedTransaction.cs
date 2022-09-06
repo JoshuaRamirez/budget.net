@@ -1,9 +1,8 @@
-﻿using Budget.Application.Projections.Core;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Budget.Application.Projection.Core
+namespace Budget.Application.Projections.Core
 {
     public interface IPlannedTransaction
     {

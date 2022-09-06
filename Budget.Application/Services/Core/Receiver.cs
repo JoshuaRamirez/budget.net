@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Budget.Application.Services
+namespace Budget.Application.Services.Core
 {
     public abstract class Receiver<TEvent> where TEvent : Event<TEvent>
     {
