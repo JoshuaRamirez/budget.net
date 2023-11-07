@@ -1,7 +1,6 @@
 ﻿using Budget.Application.Projections.Core;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Budget.Application.Projections
 {
@@ -14,7 +13,7 @@ namespace Budget.Application.Projections
         }
         public List<Guid> DepositIds { get; set; }
         public List<Guid> ForecastIds { get; set; }
-        public decimal Amount { get; set; }
+        public double Amount { get; set; }
         public string Description { get; set; }
         public int RepeatPeriod { get; set; }
         public Repetition RepeatMeasurement { get; set; }

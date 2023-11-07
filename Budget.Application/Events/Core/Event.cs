@@ -40,5 +40,10 @@ namespace Budget.Application.Events.Core
         {
             subscribers.Add(subscriber);
         }
+        public static void Clear()
+        {
+            subscribers.Clear();
+            store.Clear();
+        }
     }
 }

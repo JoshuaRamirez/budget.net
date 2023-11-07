@@ -1,18 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29806.167
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budget", "Budget\Budget.csproj", "{815FB5F3-CCDF-40E8-BE9E-844657ABB252}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Budget.Application", "Budget.Application\Budget.Application.csproj", "{26244D52-BC2F-425B-8EB6-657C93BFF87D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budget.Application", "Budget.Application\Budget.Application.csproj", "{26244D52-BC2F-425B-8EB6-657C93BFF87D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budget.Application.Tests", "Budget.Application.Tests\Budget.Application.Tests.csproj", "{A506D0B9-55C7-4613-A26B-753C919D1600}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Budget.Application.Tests", "Budget.Application.Tests\Budget.Application.Tests.csproj", "{A506D0B9-55C7-4613-A26B-753C919D1600}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A450D7C9-6ABF-400E-8CD3-D4050F7F5EF7}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Budget.Client.Api.Server", "Budget.Client.Api.Server\Budget.Client.Api.Server.csproj", "{8B97BBB6-92A4-4DCD-97BD-B1713CEA796F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,10 +20,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{815FB5F3-CCDF-40E8-BE9E-844657ABB252}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{815FB5F3-CCDF-40E8-BE9E-844657ABB252}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{815FB5F3-CCDF-40E8-BE9E-844657ABB252}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{815FB5F3-CCDF-40E8-BE9E-844657ABB252}.Release|Any CPU.Build.0 = Release|Any CPU
 		{26244D52-BC2F-425B-8EB6-657C93BFF87D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{26244D52-BC2F-425B-8EB6-657C93BFF87D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26244D52-BC2F-425B-8EB6-657C93BFF87D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -32,6 +28,10 @@ Global
 		{A506D0B9-55C7-4613-A26B-753C919D1600}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A506D0B9-55C7-4613-A26B-753C919D1600}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A506D0B9-55C7-4613-A26B-753C919D1600}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B97BBB6-92A4-4DCD-97BD-B1713CEA796F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B97BBB6-92A4-4DCD-97BD-B1713CEA796F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B97BBB6-92A4-4DCD-97BD-B1713CEA796F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B97BBB6-92A4-4DCD-97BD-B1713CEA796F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

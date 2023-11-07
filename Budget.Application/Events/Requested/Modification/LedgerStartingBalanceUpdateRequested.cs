@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Budget.Application.Events.Requested.Modification
 {
-    public class LedgerStartingBalanceModified : Event<LedgerStartingBalanceModified>
+    public class LedgerStartingBalanceUpdateRequested : Event<LedgerStartingBalanceUpdateRequested>
     {
         public Guid LedgerId { get; set; }
         public double StartingBalance { get; set; }

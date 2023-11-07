@@ -1,7 +1,6 @@
 ﻿using Budget.Application.Projections.Core;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Budget.Application.Projections
 {
@@ -11,7 +10,7 @@ namespace Budget.Application.Projections
         {
             ProposedTransactionIds = new List<Guid>();
         }
-        public decimal Amount { get; set; }
+        public double Amount { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }
         public int RepeatPeriod { get; set; }

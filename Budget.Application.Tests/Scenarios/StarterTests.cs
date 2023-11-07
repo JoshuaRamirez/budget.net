@@ -41,7 +41,7 @@ namespace Budget.Application.Tests.Scenarios
             var account = Account.Projections.Last();
             var user = User.Projections.Last();
             Assert.Equal(account.UserId, user.Id);
-            Assert.Equal(user.AccountIds[0], account.Id);
+            Assert.Equal(user.AccountIds.Last(), account.Id);
         }
     }
 }
