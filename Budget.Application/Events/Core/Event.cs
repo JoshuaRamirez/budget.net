@@ -9,41 +9,46 @@ namespace Budget.Application.Events.Core
     {
         static Event()
         {
-            store = new List<Event<TEvent>>();
-            subscribers = new List<Receiver<TEvent>>();
+            _store = new List<Event<TEvent>>();
+           // _subscribers = new List<Receiver<TEvent>>();
         }
         public Event()
         {
             Id = new Guid();
             PublishingUserId = User.Id;
         }
-        private static List<Receiver<TEvent>> subscribers { get; set; }
-        private static List<Event<TEvent>> store { get; set; }
+        //private static List<Receiver<TEvent>> _subscribers { get; set; }
+        private static List<Event<TEvent>> _store { get; set; }
         public Guid Id { get; set; }
-        public Guid PublishingUserId { get; set; }
-        public string EventName { get; set; }
+        public Guid PublishingUserId { get; }
+        public string EventName { get; protected set; }
         public void Publish()
         {
             TEvent @event = (TEvent)this;
-            Event<TEvent>.Publish(@event);
+            Publish(@event);
         }
 
         public static void Publish(TEvent @event)
         {
-            store.Add(@event);
+            _store.Add(@event);
+            var subscribers = Bus.Subscribers<TEvent>();
             foreach (var subscriber in subscribers)
             {
-                subscriber.Serve(@event);
+                subscriber(@event);
             }
         }
         public static void Subscribe(Receiver<TEvent> subscriber)
         {
-            subscribers.Add(subscriber);
+            Bus.Subscribe<TEvent>(subscriber.Serve);
         }
         public static void Clear()
         {
-            subscribers.Clear();
-            store.Clear();
+            Bus.Clear();
+            _store.Clear();
+        }
+        public static void UnSubscribe(Receiver<TEvent> subscriber)
+        {
+            Bus.UnSubscribe<TEvent>(subscriber.Serve);
         }
     }
 }

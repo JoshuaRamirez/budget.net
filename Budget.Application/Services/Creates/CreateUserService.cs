@@ -2,6 +2,7 @@
 using Budget.Application.Events.Created;
 using Budget.Application.Events.Requested.Creation;
 using Budget.Application.Projections;
+using Budget.Application.Projections.Core;
 using Budget.Application.Services.Core;
 using System;
 using System.Collections.Generic;
@@ -11,19 +12,16 @@ namespace Budget.Application.Services.Creates
 {
     public class CreateUserService : Receiver<UserRequested>
     {
-        public CreateUserService()
-        {
-            UserRequested.Subscribe(this);
-        }
+        public static CreateUserService Instance { get; } = new CreateUserService();
         public override void Serve(UserRequested @event)
         {
             // Create UserProjection
-            var userProjection = new User();
-            userProjection.UserName = @event.UserName;
-            User.Projections.Add(userProjection);
+            var projection = new User();
+            projection.UserName = @event.UserName;
+            projection.Save();
             // Publish UserCreatedEvent
             var userCreatedEvent = new UserCreated();
-            userCreatedEvent.UserId = userProjection.Id;
+            userCreatedEvent.UserId = projection.Id;
             UserCreated.Publish(userCreatedEvent);
         }
     }

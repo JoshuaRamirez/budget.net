@@ -9,10 +9,7 @@ namespace Budget.Application.Services.Creates
 {
     public class CreatePlannedExpenseService : Receiver<PlannedExpenseRequested>
     {
-        public CreatePlannedExpenseService()
-        {
-            PlannedExpenseRequested.Subscribe(this);
-        }
+        public static CreatePlannedExpenseService Instance { get; } = new CreatePlannedExpenseService();
         public override void Serve(PlannedExpenseRequested @event)
         {
             // Create Projection
@@ -22,8 +19,8 @@ namespace Budget.Application.Services.Creates
             projection.RepeatCount = @event.RepeatCount;
             projection.RepeatMeasurement = @event.RepeatMeasurement;
             projection.RepeatPeriod = @event.RepeatPeriod;
-            projection.StartDate = @event.RepeatStart;
-            PlannedExpense.Projections.Add(projection);
+            projection.StartDate = @event.StartDate;
+            projection.Save();
             // Publish Created Event
             var createdEvent = new PlannedExpenseCreated();
             createdEvent.PlannedExpenseId = projection.Id;

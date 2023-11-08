@@ -10,6 +10,7 @@ namespace Budget.Application.Services.Links
 {
     public class ForecastToPlannedDeposit : Linker<ForecastCreated, Forecast, PlannedDeposit>
     {
+        public static ForecastToPlannedDeposit Instance { get; } = new ForecastToPlannedDeposit();
         internal override List<Guid> GetSourceIds(ForecastCreated @event)
         {
             return Guids(@event.ForecastId);
@@ -17,7 +18,8 @@ namespace Budget.Application.Services.Links
 
         internal override List<Guid> GetTargetIds(List<Forecast> sources)
         {
-            return Guids(sources.SelectMany(x => x.PlannedDepositIds));
+            var allPlannedDepositIds = sources.SelectMany(x => x.PlannedDepositIds);
+            return new List<Guid>();
         }
 
         internal override void Link(Forecast source, PlannedDeposit target)

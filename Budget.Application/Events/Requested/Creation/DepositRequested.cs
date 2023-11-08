@@ -7,6 +7,10 @@ namespace Budget.Application.Events.Requested.Creation
 {
     public class DepositRequested : Event<DepositRequested>
     {
+        public DepositRequested()
+        {
+            EventName = nameof(DepositRequested);
+        }
         public Guid CategoryId { get; set; }
         public string Description { get; set; }
         public Guid LedgerId { get; set; }

@@ -7,10 +7,15 @@ namespace Budget.Application.Tests.Collaboration.Services.Creates
 {
     public class CreatePayeeServiceTests
     {
+        public CreatePayeeServiceTests()
+        {
+            Runtime.Stop();
+            Runtime.Start();
+        }
+
         [Fact]
         public void ShouldCreateProjection()
         {
-            var service = new CreatePayeeService();
             var @event = new PayeeRequested();
             @event.Publish();
             var projection = Payee.Projections[0];

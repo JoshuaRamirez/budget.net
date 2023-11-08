@@ -10,6 +10,7 @@ namespace Budget.Application.Services.Links
 {
     public class ProposedTransactionToPlannedTransaction : Linker<ProposedTransactionCreated, ProposedTransaction, PlannedTransaction>
     {
+        public static ProposedTransactionToPlannedTransaction Instance { get; } = new ProposedTransactionToPlannedTransaction();
         internal override List<Guid> GetSourceIds(ProposedTransactionCreated @event)
         {
             return Guids(@event.ProposedTransactionId);

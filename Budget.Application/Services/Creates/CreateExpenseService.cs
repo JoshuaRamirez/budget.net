@@ -7,10 +7,7 @@ namespace Budget.Application.Services.Creates
 {
     public class CreateExpenseService : Receiver<ExpenseRequested>
     {
-        public CreateExpenseService()
-        {
-            ExpenseRequested.Subscribe(this);
-        }
+        public static CreateExpenseService Instance { get; } = new CreateExpenseService();
         public override void Serve(ExpenseRequested @event)
         {
             // Create Projection
@@ -20,7 +17,7 @@ namespace Budget.Application.Services.Creates
             projection.PayeeId = @event.PayeeId;
             projection.TransactionId = @event.TransactionId;
             projection.PlannedExpenseId = @event.PlannedExpenseId;
-            Expense.Projections.Add(projection);
+            projection.Save();
             // Publish Created Event
             var createdEvent = new ExpenseCreated();
             createdEvent.ExpenseId = projection.Id;

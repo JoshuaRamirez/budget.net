@@ -5,6 +5,10 @@ namespace Budget.Application.Events.Created
 {
     public class ForecastCreated: Event<ForecastCreated>
     {
+        public ForecastCreated()
+        {
+            EventName = nameof(ForecastCreated);
+        }
         public Guid ForecastId { get; set; }
     }
 }

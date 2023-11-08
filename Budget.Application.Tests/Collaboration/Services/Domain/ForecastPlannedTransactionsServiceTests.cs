@@ -3,6 +3,8 @@ using Xunit;
 using Budget.Application.Projections;
 using Budget.Application.Events.Requested.Creation;
 using Budget.Application.Events.Requested.Calculation;
+using Budget.Application.Services.Creates;
+using Budget.Application;
 
 public class ForecastPlannedTransactionsServiceTests
 {
@@ -29,7 +31,7 @@ public class ForecastPlannedTransactionsServiceTests
             plannedDepositRequested.Amount = amount;
             plannedDepositRequested.RepeatCount = repeatCount;
             plannedDepositRequested.RepeatPeriod = repeatPeriod;
-            plannedDepositRequested.RepeatStart = repeatStart;
+            plannedDepositRequested.startDate = repeatStart;
             plannedDepositRequested.Publish();
         }
         else if (type == "Expense")
@@ -38,7 +40,7 @@ public class ForecastPlannedTransactionsServiceTests
             plannedExpenseRequested.Amount = amount;
             plannedExpenseRequested.RepeatCount = repeatCount;
             plannedExpenseRequested.RepeatPeriod = repeatPeriod;
-            plannedExpenseRequested.RepeatStart = repeatStart;
+            plannedExpenseRequested.StartDate = repeatStart;
             plannedExpenseRequested.Publish();
         }
         else
@@ -95,25 +97,25 @@ public class ForecastPlannedTransactionsServiceTests
         PublishForecastCalculationRequestedEvent(startDate, endDate);
     }
 
-    private void PublishPlannedDepositRequestedEvent(double amount, DateTime repeatStart, int repeatPeriod)
+    private void PublishPlannedDepositRequestedEvent(double amount, DateTime startDate, int repeatPeriod)
     {
         var plannedDepositRequestedEvent = new PlannedDepositRequested
         {
             Amount = amount,
             RepeatPeriod = repeatPeriod,
-            RepeatStart = repeatStart
+            startDate = startDate
         };
 
         plannedDepositRequestedEvent.Publish();
     }
 
-    private void PublishPlannedExpenseRequestedEvent(double amount, DateTime repeatStart, int repeatPeriod)
+    private void PublishPlannedExpenseRequestedEvent(double amount, DateTime startDate, int repeatPeriod)
     {
         var plannedExpenseRequestedEvent = new PlannedExpenseRequested
         {
             Amount = amount,
             RepeatPeriod = repeatPeriod,
-            RepeatStart = repeatStart
+            StartDate = startDate
         };
 
         plannedExpenseRequestedEvent.Publish();
@@ -134,6 +136,7 @@ public class ForecastPlannedTransactionsServiceTests
     [Fact]
     public void SingleDailyPlannedTransaction_ShouldHaveCorrectNumberOfForecastsAndFinalAmount()
     {
+        Runtime.Start();
         var context = new Context
         {
             Amount = 1,

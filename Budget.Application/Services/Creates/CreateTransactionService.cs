@@ -7,10 +7,7 @@ namespace Budget.Application.Services.Creates
 {
     public class CreateTransactionService : Receiver<TransactionRequested>
     {
-        public CreateTransactionService()
-        {
-            TransactionRequested.Subscribe(this);
-        }
+        public static CreateTransactionService Instance { get; } = new CreateTransactionService();
         public override void Serve(TransactionRequested @event)
         {
             // Create Projection
@@ -20,7 +17,7 @@ namespace Budget.Application.Services.Creates
             projection.LedgerId = @event.LedgerId;
             projection.SourceLedgerId = @event.SourceLedgerId;
             projection.Type= @event.Type;
-            Transaction.Projections.Add(projection);
+            projection.Save();
             // Publish Created Event
             var createdEvent = new TransactionCreated();
             createdEvent.TransactionId = projection.Id;

@@ -7,10 +7,14 @@ namespace Budget.Application.Tests.Collaboration.Services.Creates
 {
     public class CreateUserServiceTests
     {
+        public CreateUserServiceTests()
+        {
+            Runtime.Stop();
+            Runtime.Start();
+        }
         [Fact]
         public void ShouldCreateProjection()
         {
-            var service = new CreateUserService();
             var @event = new UserRequested();
             @event.Publish();
             var projection = User.Projections[0];

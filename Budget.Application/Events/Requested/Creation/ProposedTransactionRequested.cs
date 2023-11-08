@@ -7,6 +7,10 @@ namespace Budget.Application.Events.Requested.Creation
 {
     public class ProposedTransactionRequested : Event<ProposedTransactionRequested>
     {
+        public ProposedTransactionRequested()
+        {
+            EventName = nameof(ProposedTransactionRequested);
+        }
         public double Amount { get; set; }
         public DateTime Date { get; set; }
         public string Description { get; set; }

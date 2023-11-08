@@ -10,6 +10,7 @@ namespace Budget.Application.Services.Links
 {
     public class ExpenseToPlannedExpense : Linker<ExpenseCreated, Expense, PlannedExpense>
     {
+        public static ExpenseToPlannedExpense Instance { get; } = new ExpenseToPlannedExpense();
         internal override List<Guid> GetSourceIds(ExpenseCreated @event)
         {
             return Guids(@event.ExpenseId);

@@ -7,10 +7,7 @@ namespace Budget.Application.Services.Creates
 {
     public class CreateDepositService : Receiver<DepositRequested>
     {
-        public CreateDepositService()
-        {
-            DepositRequested.Subscribe(this);
-        }
+        public static CreateDepositService Instance { get; } = new CreateDepositService();
         public override void Serve(DepositRequested @event)
         {
             // Create Projection
@@ -21,7 +18,7 @@ namespace Budget.Application.Services.Creates
             projection.PayerId = @event.PayerId;
             projection.PlannedDepositId = @event.PlannedDepositId;
             projection.TransactionId = @event.TransactionId;
-            Deposit.Projections.Add(projection);
+            projection.Save();
             // Publish Created Event
             var createdEvent = new DepositCreated();
             createdEvent.DepositId = projection.Id;

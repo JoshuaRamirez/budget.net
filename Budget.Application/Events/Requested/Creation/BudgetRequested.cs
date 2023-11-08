@@ -7,6 +7,10 @@ namespace Budget.Application.Events.Requested.Creation
 {
     public class BudgetRequested: Event<BudgetRequested>
     {
+        public BudgetRequested()
+        {
+            EventName = nameof(BudgetRequested);
+        }
         public string BudgetName { get; set; }
         public List<Guid> SubBudgetIds { get; set; }
         public List<Guid> SuperBudgetIds { get; set; }

@@ -7,6 +7,14 @@ namespace Budget.Application.Services.Transformers
 {
     public class UserCreatedToAccountRequested : Transformer<UserCreated, AccountRequested>
     {
-        public UserCreatedToAccountRequested() : base(Mappers.UserCreatedToAccountRequested) {}
+        public static UserCreatedToAccountRequested Instance { get; } = new UserCreatedToAccountRequested();
+        public UserCreatedToAccountRequested() : base(userCreatedEvent =>
+        {
+            var accountRequestedEvent = new AccountRequested();
+            accountRequestedEvent.AccountName = "Income";
+            accountRequestedEvent.Type = "System";
+            accountRequestedEvent.UserId = userCreatedEvent.UserId;
+            return accountRequestedEvent;
+        }) {}
     }
 }

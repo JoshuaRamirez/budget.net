@@ -7,10 +7,15 @@ namespace Budget.Application.Tests.Collaboration.Services.Creates
 {
     public class CreateCategoryServiceTests
     {
+        public CreateCategoryServiceTests()
+        {
+            Runtime.Stop();
+            Runtime.Start();
+        }
+
         [Fact]
         public void ShouldCreateProjection()
         {
-            var service = new CreateCategoryService();
             var @event = new CategoryRequested();
             @event.Publish();
             var projection = Category.Projections[0];

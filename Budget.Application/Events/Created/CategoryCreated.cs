@@ -5,6 +5,10 @@ namespace Budget.Application.Events.Created
 {
     public class CategoryCreated : Event<CategoryCreated>
     {
+        public CategoryCreated()
+        {
+            EventName = nameof(CategoryCreated);
+        }
         public Guid CategoryId { get; set; }
     }
 }

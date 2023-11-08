@@ -5,6 +5,10 @@ namespace Budget.Application.Events.Created
 {
     public class TransactionCreated: Event<TransactionCreated>
     {
+        public TransactionCreated()
+        {
+            EventName = nameof(TransactionCreated);
+        }
         public Guid TransactionId { get; set; }
     }
 }

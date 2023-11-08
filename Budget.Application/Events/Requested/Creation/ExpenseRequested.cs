@@ -7,6 +7,10 @@ namespace Budget.Application.Events.Requested.Creation
 {
     public class ExpenseRequested : Event<ExpenseRequested>
     {
+        public ExpenseRequested()
+        {
+            EventName = nameof(ExpenseRequested);
+        }
         public Guid CategoryId { get; set; }
         public string Description { get; set; }
         public Guid LedgerId { get; set; }

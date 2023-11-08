@@ -7,10 +7,15 @@ namespace Budget.Application.Tests.Collaboration.Services.Creates
 {
     public class CreateLedgerServiceTests
     {
+        public CreateLedgerServiceTests()
+        {
+            Runtime.Stop();
+            Runtime.Start();
+        }
+
         [Fact]
         public void ShouldCreateProjection()
         {
-            var service = new CreateLedgerService();
             var @event = new LedgerRequested();
             @event.Publish();
             var projection = Ledger.Projections[0];

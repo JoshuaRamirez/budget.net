@@ -7,17 +7,14 @@ namespace Budget.Application.Services.Creates
 {
     public class CreateAccountService : Receiver<AccountRequested>
     {
-        public CreateAccountService()
-        {
-            AccountRequested.Subscribe(this);
-        }
+        public static CreateAccountService Instance { get; } = new CreateAccountService();
         public override void Serve(AccountRequested @event)
         {
             // Create Projection
             var projection = new Account();
             projection.AccountName = @event.AccountName;
             projection.UserId = @event.UserId;
-            Account.Projections.Add(projection);
+            projection.Save();
             // Publish Created Event
             var createdEvent = new AccountCreated();
             createdEvent.AccountId = projection.Id;

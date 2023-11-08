@@ -9,10 +9,7 @@ namespace Budget.Application.Services.Creates
 {
     public class CreatePlannedTransactionService : Receiver<PlannedTransactionRequested>
     {
-        public CreatePlannedTransactionService()
-        {
-            PlannedTransactionRequested.Subscribe(this);
-        }
+        public static CreatePlannedTransactionService Instance { get; } = new CreatePlannedTransactionService();
         public override void Serve(PlannedTransactionRequested @event)
         {
             // TODO: Ensure the repeat properties are base to this class.
@@ -21,12 +18,13 @@ namespace Budget.Application.Services.Creates
             var projection = new PlannedTransaction();
             projection.Amount = @event.Amount;
             projection.Description = @event.Description;
+            projection.PublishingUserId = @event.PublishingUserId;
             projection.RepeatCount = @event.RepeatCount;
-            projection.RepeatMeasurement = @event.RepeatMeasurement;
+            projection.RepeatMeasurement = @event.PeriodMeasurement;
             projection.RepeatPeriod = @event.RepeatPeriod;
-            projection.StartDate = @event.RepeatStart;
+            projection.StartDate = @event.StartDate;
             projection.TransactionType = @event.TransactionType;
-            PlannedTransaction.Projections.Add(projection);
+            projection.Save();
             // Publish Created Event
             var createdEvent = new PlannedTransactionCreated();
             createdEvent.PlannedTransactionId = projection.Id;

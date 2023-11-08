@@ -7,10 +7,7 @@ namespace Budget.Application.Services.Creates
 {
     public class CreatePayerService : Receiver<PayerRequested>
     {
-        public CreatePayerService()
-        {
-            PayerRequested.Subscribe(this);
-        }
+        public static CreatePayerService Instance { get; }  = new CreatePayerService();
         public override void Serve(PayerRequested @event)
         {
             // Create Projection
@@ -18,7 +15,7 @@ namespace Budget.Application.Services.Creates
             projection.Description = @event.Description;
             projection.PayerName = @event.PayerName;
             projection.Type = @event.Type;
-            Payer.Projections.Add(projection);
+            projection.Save();
             // Publish Created Event
             var createdEvent = new PayerCreated();
             createdEvent.PayerId = projection.Id;

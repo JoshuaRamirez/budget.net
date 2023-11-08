@@ -2,15 +2,14 @@
 using Budget.Application.Events.Requested.Creation;
 using Budget.Application.Projections;
 using Budget.Application.Services.Core;
+using System;
+using System.Collections.Generic;
 
 namespace Budget.Application.Services.Creates
 {
     public class CreateForecastService : Receiver<ForecastRequested>
     {
-        public CreateForecastService()
-        {
-            ForecastRequested.Subscribe(this);
-        }
+        public static CreateForecastService Instance { get; } = new CreateForecastService();
         public override void Serve(ForecastRequested @event)
         {
             // Create Projection
@@ -19,9 +18,9 @@ namespace Budget.Application.Services.Creates
             projection.CategoryId = @event.CategoryId;
             projection.Date = @event.Date;
             projection.Notes = @event.Notes;
-            projection.PlannedDepositIds = @event.PlannedDepositIds;
-            projection.PlannedExpenseIds = @event.PlannedExpenseIds;
-            Forecast.Projections.Add(projection);
+            projection.PlannedDepositIds = @event.PlannedDepositIds ?? new List<Guid>();
+            projection.PlannedExpenseIds = @event.PlannedExpenseIds ?? new List<Guid>();
+            projection.Save();
             // Publish Created Event
             var createdEvent = new ForecastCreated();
             createdEvent.ForecastId = projection.Id;

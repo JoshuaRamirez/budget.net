@@ -9,10 +9,7 @@ namespace Budget.Application.Services.Creates
 {
     public class CreatePlannedDepositService : Receiver<PlannedDepositRequested>
     {
-        public CreatePlannedDepositService()
-        {
-            PlannedDepositRequested.Subscribe(this);
-        }
+        public static CreatePlannedDepositService Instance { get; } = new CreatePlannedDepositService();
         public override void Serve(PlannedDepositRequested @event)
         {
             // Create Projection
@@ -22,8 +19,8 @@ namespace Budget.Application.Services.Creates
             projection.RepeatCount = @event.RepeatCount;
             projection.RepeatMeasurement = @event.RepeatMeasurement;
             projection.RepeatPeriod = @event.RepeatPeriod;
-            projection.StartDate = @event.RepeatStart;
-            PlannedDeposit.Projections.Add(projection);
+            projection.StartDate = @event.startDate;
+            projection.Save();
             // Publish Created Event
             var createdEvent = new PlannedDepositCreated();
             createdEvent.PlannedDepositId = projection.Id;

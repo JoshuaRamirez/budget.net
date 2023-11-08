@@ -20,5 +20,6 @@ namespace Budget.Application.Projections
         public int TimesRepeated { get; set; }
         public DateTime StartDate { get; set; }
         public string TransactionType { get; set; }
+        public Guid PublishingUserId { get; internal set; }
     }
 }

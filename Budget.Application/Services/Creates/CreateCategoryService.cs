@@ -7,16 +7,13 @@ namespace Budget.Application.Services.Creates
 {
     public class CreateCategoryService : Receiver<CategoryRequested>
     {
-        public CreateCategoryService()
-        {
-            CategoryRequested.Subscribe(this);
-        }
+        public static CreateCategoryService Instance { get; } = new CreateCategoryService();
         public override void Serve(CategoryRequested @event)
         {
             // Create Projection
             var projection = new Category();
             projection.CategoryName = @event.CategoryName;
-            Category.Projections.Add(projection);
+            projection.Save();
             // Publish Created Event
             var createdEvent = new CategoryCreated();
             createdEvent.CategoryId = projection.Id;

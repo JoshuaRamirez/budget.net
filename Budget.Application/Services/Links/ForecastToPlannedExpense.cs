@@ -9,6 +9,7 @@ namespace Budget.Application.Services.Links
 {
     public class ForecastToPlannedExpense : Linker<ForecastCreated, Forecast, PlannedExpense>
     {
+        public static ForecastToPlannedExpense Instance { get; } = new ForecastToPlannedExpense();
         internal override List<Guid> GetSourceIds(ForecastCreated @event)
         {
             return Guids(@event.ForecastId);

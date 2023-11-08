@@ -7,10 +7,15 @@ namespace Budget.Application.Tests.Collaboration.Services.Creates
 {
     public class CreateAllocationServiceTests
     {
+        public CreateAllocationServiceTests()
+        {
+            Runtime.Stop();
+            Runtime.Start();
+        }
+
         [Fact]
         public void ShouldCreateProjection()
         {
-            var service = new CreateAllocationService();
             var @event = new AllocationRequested();
             @event.Publish();
             var projection = Allocation.Projections[0];

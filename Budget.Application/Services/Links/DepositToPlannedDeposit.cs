@@ -9,6 +9,7 @@ namespace Budget.Application.Services.Links
 {
     public class DepositToPlannedDeposit : Linker<DepositCreated, Deposit, PlannedDeposit>
     {
+        public static DepositToPlannedDeposit Instance { get; } = new DepositToPlannedDeposit();
         internal override List<Guid> GetSourceIds(DepositCreated @event)
         {
             return Guids(@event.DepositId);

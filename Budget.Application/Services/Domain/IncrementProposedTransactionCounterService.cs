@@ -4,7 +4,7 @@ using Budget.Application.Services.Core;
 
 public class IncrementProposedTransactionCounterService : Receiver<ProposedTransactionCreated>
 {
-    public static IncrementProposedTransactionCounterService Instance = new IncrementProposedTransactionCounterService();
+    public static IncrementProposedTransactionCounterService Instance { get; } = new IncrementProposedTransactionCounterService();
 
     public override void Serve(ProposedTransactionCreated @event)
     {

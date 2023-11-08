@@ -7,10 +7,15 @@ namespace Budget.Application.Tests.Collaboration.Services.Creates
 {
     public class CreateExpenseServiceTests
     {
+        public CreateExpenseServiceTests()
+        {
+            Runtime.Stop();
+            Runtime.Start();
+        }
+
         [Fact]
         public void ShouldCreateProjection()
         {
-            var service = new CreateExpenseService();
             var @event = new ExpenseRequested();
             @event.Publish();
             var projection = Expense.Projections[0];

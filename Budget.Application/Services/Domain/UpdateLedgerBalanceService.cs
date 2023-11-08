@@ -4,6 +4,7 @@ using Budget.Application.Services.Core;
 
 public class UpdateLedgerBalanceService : Receiver<TransactionCreated>
 {
+    public static UpdateLedgerBalanceService Instance { get; } = new UpdateLedgerBalanceService();
     public override void Serve(TransactionCreated @event)
     {
         var transactionProjection = Transaction.Get(@event.TransactionId);

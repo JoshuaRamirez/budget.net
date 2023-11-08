@@ -10,6 +10,7 @@ namespace Budget.Application.Services.Creates
 {
     public class ForecastPlannedTransactionsService : Receiver<ForecastCalculationRequested>
     {
+        public static ForecastPlannedTransactionsService Instance { get; } = new ForecastPlannedTransactionsService();
         public override void Serve(ForecastCalculationRequested @event)
         {
             var startDate = @event.StartDate;

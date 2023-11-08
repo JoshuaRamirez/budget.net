@@ -7,6 +7,7 @@ namespace YourNamespace
 {
     public class ProposeTransactionsForTodayService : Receiver<DailyTimerIntervalTicked>
     {
+        public static ProposeTransactionsForTodayService Instance { get; } = new ProposeTransactionsForTodayService();
         public override void Serve(DailyTimerIntervalTicked @event)
         {
             var plannedTransactionProjections = PlannedTransaction.GetAll();

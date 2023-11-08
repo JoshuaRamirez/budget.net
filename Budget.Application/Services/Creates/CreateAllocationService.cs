@@ -7,17 +7,14 @@ namespace Budget.Application.Services.Creates
 {
     public class CreateAllocationService : Receiver<AllocationRequested>
     {
-        public CreateAllocationService()
-        {
-            AllocationRequested.Subscribe(this);
-        }
+        public static CreateAllocationService Instance { get; } = new CreateAllocationService();
         public override void Serve(AllocationRequested @event)
         {
             // Create Projection
             var projection = new Allocation();
             projection.LedgerId = @event.LedgerId;
             projection.TransactionId = @event.TransactionId;
-            Allocation.Projections.Add(projection);
+            projection.Save();
             // Publish Created Event
             var createdEvent = new AllocationCreated();
             createdEvent.AllocationId = projection.Id;

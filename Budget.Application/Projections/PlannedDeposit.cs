@@ -19,5 +19,10 @@ namespace Budget.Application.Projections
         public Repetition RepeatMeasurement { get; set; }
         public int RepeatCount { get; set; }
         public DateTime StartDate { get; set; }
+
+        internal static object Single(Func<object, object> value)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -10,10 +10,7 @@ namespace Budget.Application.Services.Links
 {
     public class AccountToUser : Linker<AccountCreated, Account, User>
     {
-        public AccountToUser()
-        {
-            AccountCreated.Subscribe(this);
-        }
+        public static AccountToUser Instance { get; } = new AccountToUser();
         internal override List<Guid> GetSourceIds(AccountCreated @event)
         {
             return new List<Guid>() { @event.AccountId };

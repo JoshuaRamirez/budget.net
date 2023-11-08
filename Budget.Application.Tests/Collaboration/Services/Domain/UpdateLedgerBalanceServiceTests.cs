@@ -1,4 +1,5 @@
-﻿using Budget.Application.Events.Created;
+﻿using Budget.Application;
+using Budget.Application.Events.Requested.Creation;
 using Budget.Application.Projections;
 using Xunit;
 
@@ -8,20 +9,13 @@ public class UpdateLedgerBalanceServiceTests
     [Fact]
     public void ShouldUpdateWithAllocation()
     {
-        var ledger = new Ledger();
-        ledger.Save();
-
-        var transaction = new Transaction();
-        transaction.Amount = -1;
-        transaction.LedgerId = ledger.Id;
-        transaction.Save();
-
-        var transactionCreatedEvent = new TransactionCreated();
-        transactionCreatedEvent.TransactionId = transaction.Id;
-        transactionCreatedEvent.Publish();
-
-        var projection = Transaction.GetFirst();
-
-        //Assert.Equal(1, projection.Balance);
+        Runtime.Start();
+        new UserRequested().Publish();
+        var ledger = Ledger.GetFirst();
+        var transactionRequested = new TransactionRequested();
+        transactionRequested.Amount = -100;
+        transactionRequested.LedgerId = ledger.Id;
+        transactionRequested.Publish();
+        Assert.Equal(100, ledger.Balance);
     }
 }

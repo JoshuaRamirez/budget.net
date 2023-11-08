@@ -9,10 +9,7 @@ namespace Budget.Application.Services.Creates
 {
     public class CreateProposedTransactionService : Receiver<ProposedTransactionRequested>
     {
-        public CreateProposedTransactionService()
-        {
-            ProposedTransactionRequested.Subscribe(this);
-        }
+        public static CreateProposedTransactionService Instance { get; } = new CreateProposedTransactionService();
         public override void Serve(ProposedTransactionRequested @event)
         {
             // TODO: Ensure the repeat properties are base to this class.
@@ -23,7 +20,7 @@ namespace Budget.Application.Services.Creates
             projection.Description = @event.Description;
             projection.PlannedTransactionId = @event.PlannedTransactionId;
             projection.TransactionType = @event.TransactionType;
-            ProposedTransaction.Projections.Add(projection);
+            projection.Save();
             // Publish Created Event
             var createdEvent = new ProposedTransactionCreated();
             createdEvent.ProposedTransactionId = projection.Id;

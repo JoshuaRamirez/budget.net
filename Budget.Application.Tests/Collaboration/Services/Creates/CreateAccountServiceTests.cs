@@ -7,10 +7,15 @@ namespace Budget.Application.Tests.Collaboration.Services.Creates
 {
     public class CreateAccountServiceTests
     {
+        public CreateAccountServiceTests()
+        {
+            Runtime.Stop();
+            Runtime.Start();
+        }
+
         [Fact]
         public void ShouldCreateProjection()
         {
-            var service = new CreateAccountService();
             var @event = new AccountRequested();
             @event.Publish();
             var projection = Account.Projections[0];

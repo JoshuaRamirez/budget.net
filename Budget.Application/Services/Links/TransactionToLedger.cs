@@ -10,6 +10,7 @@ namespace Budget.Application.Services.Links
 {
     public class TransactionToLedger : Linker<TransactionCreated, Transaction, Ledger>
     {
+        public static TransactionToLedger Instance { get; } = new TransactionToLedger();
         internal override List<Guid> GetSourceIds(TransactionCreated @event)
         {
             return Guids(@event.TransactionId);

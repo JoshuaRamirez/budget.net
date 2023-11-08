@@ -7,10 +7,15 @@ namespace Budget.Application.Tests.Collaboration.Services.Creates
 {
     public class CreatePlannedDepositServiceTests
     {
+        public CreatePlannedDepositServiceTests()
+        {
+            Runtime.Stop();
+            Runtime.Start();
+        }
+
         [Fact]
         public void ShouldCreateProjection()
         {
-            var service = new CreatePlannedDepositService();
             var @event = new PlannedDepositRequested();
             @event.Publish();
             var projection = PlannedDeposit.Projections[0];
