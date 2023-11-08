@@ -1,6 +1,5 @@
 ﻿using Budget.Application.Events.Created;
 using Budget.Application.Events.Requested.Creation;
-using Budget.Application.Projections.Core;
 using Budget.Application.Services.Core;
 
 namespace Budget.Application.Services.Creates

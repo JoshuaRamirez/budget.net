@@ -1,5 +1,4 @@
 ﻿using Budget.Application.Events.Core;
-using Budget.Application.Projections.Core;
 using System;
 
 namespace Budget.Application.Events.Created

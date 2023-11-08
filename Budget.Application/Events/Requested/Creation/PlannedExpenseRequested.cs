@@ -1,8 +1,6 @@
 ﻿using Budget.Application.Events.Core;
 using Budget.Application.Projections.Core;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Budget.Application.Events.Requested.Creation
 {

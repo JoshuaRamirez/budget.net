@@ -6,7 +6,7 @@ using System;
 using Budget.Application.Events.Requested.Calculation;
 using System.Linq;
 
-namespace Budget.Application.Services.Creates
+namespace Budget.Application.Services.Domain
 {
     public class ForecastPlannedTransactionsService : Receiver<ForecastCalculationRequested>
     {

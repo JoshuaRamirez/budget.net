@@ -3,7 +3,7 @@ using Budget.Application.Events.System;
 using Budget.Application.Projections;
 using Budget.Application.Services.Core;
 
-namespace YourNamespace
+namespace Budget.Application.Services.Domain
 {
     public class ProposeTransactionsForTodayService : Receiver<DailyTimerIntervalTicked>
     {
