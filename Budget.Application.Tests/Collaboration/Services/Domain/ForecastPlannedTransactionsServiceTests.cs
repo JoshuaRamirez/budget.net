@@ -49,13 +49,15 @@ public class ForecastPlannedTransactionsServiceTests
         var context = new Context
         {
             TransactionAmount = 1,
-            EndDate = new DateTime(2019, 1, 31),
             ExpectedFinalDepositAmount = 5,
             ExpectedFinalExpenseAmount = -5,
             ExpectedNumberOfForecasts = 31,
-            RepeatPeriod = 7,
+            RepeatCount = 5,
+            RepeatPeriod = 1,
+            PeriodMeasurement = Period.Weeks,
             RepeatStart = new DateTime(2019, 1, 1),
-            StartDate = new DateTime(2019, 1, 1)
+            StartDate = new DateTime(2019, 1, 1),
+            EndDate = new DateTime(2019, 1, 31),
         };
 
         runTests(context);
@@ -73,6 +75,7 @@ public class ForecastPlannedTransactionsServiceTests
             ExpectedNumberOfForecasts = 10,
             RepeatPeriod = 1,
             RepeatStart = new DateTime(2018, 12, 22),
+            RepeatCount = 10,
             StartDate = new DateTime(2019, 1, 1)
         };
 
@@ -90,6 +93,7 @@ public class ForecastPlannedTransactionsServiceTests
             ExpectedFinalExpenseAmount = -3,
             ExpectedNumberOfForecasts = 5,
             RepeatPeriod = 2,
+            RepeatCount = 5,
             RepeatStart = new DateTime(2018, 12, 22),
             StartDate = new DateTime(2019, 1, 6)
         };
