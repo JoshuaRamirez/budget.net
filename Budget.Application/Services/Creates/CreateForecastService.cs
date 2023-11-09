@@ -18,8 +18,7 @@ namespace Budget.Application.Services.Creates
             projection.CategoryId = @event.CategoryId;
             projection.Date = @event.Date;
             projection.Notes = @event.Notes;
-            projection.PlannedDepositIds = @event.PlannedDepositIds ?? new List<Guid>();
-            projection.PlannedExpenseIds = @event.PlannedExpenseIds ?? new List<Guid>();
+            projection.PlannedTransactionIds = @event.PlannedTransactionIds ?? new List<Guid>();
             projection.Save();
             // Publish Created Event
             var createdEvent = new ForecastCreated();

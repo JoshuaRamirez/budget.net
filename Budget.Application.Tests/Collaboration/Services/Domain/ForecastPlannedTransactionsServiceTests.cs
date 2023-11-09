@@ -5,13 +5,14 @@ using Budget.Application.Events.Requested.Creation;
 using Budget.Application.Events.Requested.Calculation;
 using Budget.Application;
 using Budget.Application.Projections.Core;
+using System.Linq;
 
 public class ForecastPlannedTransactionsServiceTests
 {
 
     public struct Context
     {
-        public int Amount { get; set; }
+        public int TransactionAmount { get; set; }
         public DateTime EndDate { get; set; }
         public int ExpectedFinalDepositAmount { get; set; }
         public int ExpectedFinalExpenseAmount { get; set; }
@@ -19,125 +20,8 @@ public class ForecastPlannedTransactionsServiceTests
         public int RepeatPeriod { get; set; }
         public DateTime RepeatStart { get; set; }
         public DateTime StartDate { get; set; }
-    }
-
-    private void PublishPlannedTransactionCreationRequestEvent(TransactionType transactionType, double amount, DateTime repeatStart, int repeatPeriod, int repeatCount)
-    {
-        var plannedTransactionRequested = new PlannedTransactionRequested
-        {
-            Amount = amount,
-            LedgerId = Ledger.Projections[0].Id,
-            RepeatCount = repeatCount,
-            RepeatPeriod = repeatPeriod,
-            StartDate = repeatStart,
-            RepeatMeasurement = Repetition.Days,
-            TransactionType = transactionType,
-        };
-        plannedTransactionRequested.Publish();
-    }
-
-    private PlannedTransactionRequested CreatePlannedTransactionRequested(TransactionType transactionType, double amount, DateTime repeatStart, int repeatPeriod, int repeatCount)
-    {
-        switch (transactionType)
-        {
-            case TransactionType.Deposit:
-                
-
-            default:
-                throw new ArgumentException("Invalid transaction type.");
-        }
-    }
-
-
-
-    private ForecastCalculationRequested CreateForecastCalculationRequestedEvent(int forecastDayCount)
-    {
-        var startDate = new DateTime(2019, 1, 1);
-        var endDate = startDate.AddDays(forecastDayCount - 1);
-
-        var forecastCalculationRequested = new ForecastCalculationRequested
-        {
-            StartDate = startDate,
-            EndDate = endDate
-        };
-
-        return forecastCalculationRequested;
-    }
-
-    private void CheckForSingleTransactionPlanResults(TransactionType type, double amount, int repeatPeriod, int forecastDayCount)
-    {
-        var startDate = new DateTime(2019, 1, 1);
-        var forecastProjections = Forecast.GetAll();
-
-        Assert.Equal(forecastDayCount, forecastProjections.Count);
-
-        var thisDate = new DateTime(startDate.Ticks);
-        double amountTotal = Math.Ceiling((double)forecastDayCount / repeatPeriod) * amount;
-        if (type == TransactionType.Expense)
-        {
-            amountTotal = -amountTotal;
-        }
-
-        foreach (var forecastProjection in forecastProjections)
-        {
-            Assert.Equal(amountTotal, forecastProjections[forecastProjections.Count - 1].Amount);
-            Assert.Equal(thisDate, forecastProjection.Date);
-            thisDate = thisDate.AddDays(1);
-        }
-    }
-
-    private void ActWithSingleDeposit(double amount, DateTime repeatStart, int repeatPeriod, DateTime startDate, DateTime endDate)
-    {
-        PublishPlannedDepositRequestedEvent(amount, repeatStart, repeatPeriod);
-        PublishForecastCalculationRequestedEvent(startDate, endDate);
-    }
-
-    private void ActWithSingleExpense(double amount, DateTime repeatStart, int repeatPeriod, DateTime startDate, DateTime endDate)
-    {
-        PublishPlannedExpenseRequestedEvent(amount, repeatStart, repeatPeriod);
-        PublishForecastCalculationRequestedEvent(startDate, endDate);
-    }
-
-    private void PublishPlannedDepositRequestedEvent(double amount, DateTime startDate, int repeatPeriod)
-    {
-        var plannedDepositRequestedEvent = new PlannedDepositRequested
-        {
-            Amount = amount,
-            LedgerId = Guid.NewGuid(),
-            RepeatPeriod = repeatPeriod,
-            RepeatCount = 1,
-            RepeatMeasurement = Repetition.Days,
-            StartDate = startDate
-        };
-
-        plannedDepositRequestedEvent.Publish();
-    }
-
-    private void PublishPlannedExpenseRequestedEvent(double amount, DateTime startDate, int repeatPeriod)
-    {
-        var plannedExpenseRequestedEvent = new PlannedExpenseRequested
-        {
-            Amount = amount,
-            LedgerId = Guid.NewGuid(),
-            RepeatPeriod = repeatPeriod,
-            RepeatCount = 1,
-            RepeatMeasurement = Repetition.Days,
-            StartDate = startDate
-        };
-
-        plannedExpenseRequestedEvent.Publish();
-    }
-
-    private void PublishForecastCalculationRequestedEvent(DateTime startDate, DateTime endDate)
-    {
-        var forecastCalculationRequestEvent = new ForecastCalculationRequested
-        {
-            StartDate = startDate,
-            EndDate = endDate,
-            StartingBalance = 0
-        };
-
-        forecastCalculationRequestEvent.Publish();
+        public int RepeatCount { get; set; }
+        public Period PeriodMeasurement {  get; set; }
     }
 
     [Fact]
@@ -145,17 +29,18 @@ public class ForecastPlannedTransactionsServiceTests
     {
         var context = new Context
         {
-            Amount = 1,
-            EndDate = new DateTime(2019, 1, 10),
+            TransactionAmount = 1,
             ExpectedFinalDepositAmount = 10,
             ExpectedFinalExpenseAmount = -10,
             ExpectedNumberOfForecasts = 10,
             RepeatPeriod = 1,
+            RepeatCount = 10,
             RepeatStart = new DateTime(2019, 1, 1),
-            StartDate = new DateTime(2019, 1, 1)
+            StartDate = new DateTime(2019, 1, 1),
+            EndDate = new DateTime(2019, 1, 10),
         };
 
-        RunTests(context);
+        runTests(context);
     }
 
     [Fact]
@@ -163,7 +48,7 @@ public class ForecastPlannedTransactionsServiceTests
     {
         var context = new Context
         {
-            Amount = 1,
+            TransactionAmount = 1,
             EndDate = new DateTime(2019, 1, 31),
             ExpectedFinalDepositAmount = 5,
             ExpectedFinalExpenseAmount = -5,
@@ -173,7 +58,7 @@ public class ForecastPlannedTransactionsServiceTests
             StartDate = new DateTime(2019, 1, 1)
         };
 
-        RunTests(context);
+        runTests(context);
     }
 
     [Fact]
@@ -181,7 +66,7 @@ public class ForecastPlannedTransactionsServiceTests
     {
         var context = new Context
         {
-            Amount = 1,
+            TransactionAmount = 1,
             EndDate = new DateTime(2019, 1, 10),
             ExpectedFinalDepositAmount = 10,
             ExpectedFinalExpenseAmount = -10,
@@ -191,7 +76,7 @@ public class ForecastPlannedTransactionsServiceTests
             StartDate = new DateTime(2019, 1, 1)
         };
 
-        RunTests(context);
+        runTests(context);
     }
 
     [Fact]
@@ -199,7 +84,7 @@ public class ForecastPlannedTransactionsServiceTests
     {
         var context = new Context
         {
-            Amount = 1,
+            TransactionAmount = 1,
             EndDate = new DateTime(2019, 1, 10),
             ExpectedFinalDepositAmount = 3,
             ExpectedFinalExpenseAmount = -3,
@@ -209,92 +94,76 @@ public class ForecastPlannedTransactionsServiceTests
             StartDate = new DateTime(2019, 1, 6)
         };
 
-        RunTests(context);
+        runTests(context);
     }
 
     [Fact]
     public void AutoGeneratedTests_ShouldHaveCorrectNumberOfForecastsAndFinalAmount()
     {
         const int tests = 10;
-        const int forecastDayCount = 10;
-        var repeatStart = new DateTime(2019, 1, 1);
+        var context = new Context();
+        context.RepeatCount = 10;
+        context.RepeatStart = new DateTime(2019, 1, 1);
+        context.RepeatPeriod = 1;
+        context.ExpectedNumberOfForecasts = 10;
+        context.StartDate = context.RepeatStart;
+        context.EndDate = context.StartDate.AddDays((context.RepeatCount * context.RepeatPeriod)-1);
 
         // Deposits - Daily
         for (int i = 0; i < tests; i++)
         {
-            var amount = i + 1;
-            var repeatPeriod = 1;
-            var type = TransactionType.Deposit;
-            RunAutoGeneratedTest(type, amount, repeatStart, repeatPeriod, forecastDayCount);
-        }
-
-        // Deposits - Variant Periods
-        for (int i = 0; i < tests; i++)
-        {
-            var amount = i + 1;
-            var repeatPeriod = i + 1;
-            var type = TransactionType.Deposit;
-            RunAutoGeneratedTest(type, amount, repeatStart, repeatPeriod, forecastDayCount);
+            context.TransactionAmount = i + 1;    
+            runAutoGeneratedTest(context, TransactionType.Deposit);
         }
 
         // Expenses - Daily
         for (int i = 0; i < tests; i++)
         {
-            var amount = i + 1;
-            var repeatPeriod = 1;
-            var type = TransactionType.Expense;
-            RunAutoGeneratedTest(type, amount, repeatStart, repeatPeriod, forecastDayCount);
+            context.TransactionAmount = i + 1;
+            runAutoGeneratedTest(context, TransactionType.Expense);
+        }
+
+        // Deposits - Variant Periods
+        for (int i = 0; i < tests; i++)
+        {
+            context.TransactionAmount = i + 1;
+            context.RepeatPeriod = i + 1;
+            runAutoGeneratedTest(context, TransactionType.Deposit);
         }
 
         // Expenses - Variant Periods
         for (int i = 0; i < tests; i++)
         {
-            var amount = i + 1;
-            var repeatPeriod = i + 1;
-            var type = TransactionType.Expense;
-            RunAutoGeneratedTest(type, amount, repeatStart, repeatPeriod, forecastDayCount);
+            context.TransactionAmount = i + 1;
+            context.RepeatPeriod = i + 1;
+            runAutoGeneratedTest(context, TransactionType.Expense);
         }
     }
 
-    private void RunAutoGeneratedTest(TransactionType type, double amount, DateTime repeatStart, int repeatPeriod, int repeatCount)
+
+    private void runTests(Context context)
     {
-        Runtime.Reset();
-        new UserRequested().Publish();
-        PublishPlannedTransactionCreationRequestEvent(type, amount, repeatStart, repeatPeriod, repeatCount);
-        var createForecastCalculationRequested = CreateForecastCalculationRequestedEvent(repeatCount);
-        createForecastCalculationRequested.Publish();
-        CheckForSingleTransactionPlanResults(type, amount, repeatPeriod, repeatCount);
+        runTest(context, TransactionType.Expense);
+        runTest(context, TransactionType.Deposit);
     }
 
-    private void RunTests(Context context)
+    private void runTest(Context context, TransactionType type)
     {
-
         Runtime.Reset();
-        new UserRequested().Publish();
-
-        TransactionType plannedTransactionType;
-        plannedTransactionType = TransactionType.Deposit;
-
-        AssertCorrectNumberOfForecasts(plannedTransactionType, context);
-        AssertCorrectFinalForecastAmount(plannedTransactionType, context);
-
-        plannedTransactionType = TransactionType.Expense;
-
-        AssertCorrectNumberOfForecasts(plannedTransactionType, context);
-        AssertCorrectFinalForecastAmount(plannedTransactionType, context);
+        performForecast(type, context);
+        assertCorrectNumberOfForecasts(type, context);
+        assertCorrectFinalForecastAmount(type, context);
     }
 
-    private void AssertCorrectNumberOfForecasts(TransactionType type, Context context)
+    private void assertCorrectNumberOfForecasts(TransactionType type, Context context)
     {
-        RunTestCorrectNumberOfForecasts(type, context);
         var actual = Forecast.GetAll().Count;
         var expected = context.ExpectedNumberOfForecasts;
         Assert.Equal(expected, actual);
     }
 
-    private void AssertCorrectFinalForecastAmount(TransactionType type, Context context)
+    private void assertCorrectFinalForecastAmount(TransactionType type, Context context)
     {
-        RunTestCorrectFinalForecastAmount(type, context);
         var actual = Forecast.GetLast().Amount;
         double expected;
         if (type == TransactionType.Deposit)
@@ -309,58 +178,98 @@ public class ForecastPlannedTransactionsServiceTests
         {
             throw new ArgumentException("Invalid planned transaction type.");
         }
-
         Assert.Equal(expected, actual);
     }
 
-    private void RunTestCorrectNumberOfForecasts(TransactionType type, Context context)
+    private void performForecast(TransactionType type, Context context)
     {
-        RunTest(type, context);
-        var actual = Forecast.GetAll().Count;
-        var expected = context.ExpectedNumberOfForecasts;
-        Assert.Equal(expected, actual);
-    }
-
-    private void RunTestCorrectFinalForecastAmount(TransactionType type, Context context)
-    {
-        RunTest(type, context);
-        var actual = Forecast.GetLast().Amount;
-        double expected;
         if (type == TransactionType.Deposit)
         {
-            expected = context.ExpectedFinalDepositAmount;
+            publishPlannedTransactionRequestedEvent(context, TransactionType.Deposit);
+            publishForecastCalculationRequestedEvent(context);
         }
         else if (type == TransactionType.Expense)
         {
-            expected = context.ExpectedFinalExpenseAmount;
-        }
-        else
-        {
-            throw new ArgumentException("Invalid planned transaction type.");
-        }
-
-        Assert.Equal(expected, actual);
-    }
-
-    private void RunTest(TransactionType type, Context context)
-    {
-        var amount = context.Amount;
-        var repeatStart = context.RepeatStart;
-        var repeatPeriod = context.RepeatPeriod;
-        var startDate = context.StartDate;
-        var endDate = context.EndDate;
-
-        if (type == TransactionType.Deposit)
-        {
-            ActWithSingleDeposit(amount, repeatStart, repeatPeriod, startDate, endDate);
-        }
-        else if (type == TransactionType.Expense)
-        {
-            ActWithSingleExpense(amount, repeatStart, repeatPeriod, startDate, endDate);
+            publishPlannedTransactionRequestedEvent(context, TransactionType.Expense);
+            publishForecastCalculationRequestedEvent(context);
         }
         else
         {
             throw new ArgumentException("Invalid planned transaction type.");
         }
     }
+
+    private void runAutoGeneratedTest(Context context, TransactionType type)
+    {
+        Runtime.Reset();
+        publishPlannedTransactionCreationRequestEvent(context, type);
+        publishForecastCalculationRequestedEvent(context);
+        assertAutoGeneratedTestResults(context, type);
+    }
+
+    private void publishPlannedTransactionCreationRequestEvent(Context context, TransactionType transactionType)
+    {
+        var plannedTransactionRequested = new PlannedTransactionRequested
+        {
+            Amount = context.TransactionAmount,
+            LedgerId = Ledger.Projections[0].Id,
+            RepeatCount = context.RepeatCount,
+            RepeatPeriod = context.RepeatPeriod,
+            StartDate = context.RepeatStart,
+            RepeatMeasurement = context.PeriodMeasurement,
+            TransactionType = transactionType,
+        };
+        plannedTransactionRequested.Publish();
+    }
+
+    private void assertAutoGeneratedTestResults(Context context, TransactionType type)
+    {
+        var startDate = new DateTime(2019, 1, 1);
+        var forecastProjections = Forecast.GetAll();
+
+        Assert.Equal(context.RepeatCount, forecastProjections.Count);
+
+        var thisDate = new DateTime(startDate.Ticks);
+        var amountTotal = Math.Ceiling((double)context.RepeatCount / context.RepeatPeriod) * context.TransactionAmount;
+        if (type == TransactionType.Expense)
+        {
+            amountTotal = -amountTotal;
+        }
+        Assert.Equal(amountTotal, forecastProjections.Last().Amount);
+
+        for (var i = 0; i < forecastProjections.Count; i++)
+        {
+            var forecastProjection = forecastProjections[i];
+            Assert.Equal(thisDate, forecastProjection.Date);
+            thisDate = thisDate.AddDays(1);
+        }
+    }
+
+    private void publishPlannedTransactionRequestedEvent(Context context, TransactionType type)
+    {
+        var @event = new PlannedTransactionRequested
+        {
+            Amount = context.TransactionAmount,
+            LedgerId = Guid.NewGuid(),
+            RepeatPeriod = context.RepeatPeriod,
+            RepeatCount = context.RepeatCount,
+            RepeatMeasurement = Period.Days,
+            StartDate = context.StartDate,
+            TransactionType = type
+        };
+
+        @event.Publish();
+    }
+
+    private void publishForecastCalculationRequestedEvent(Context context)
+    {
+        var forecastCalculationRequestEvent = new ForecastCalculationRequested
+        {
+            StartDate = context.StartDate,
+            EndDate = context.EndDate,
+            StartingBalance = 0
+        };
+        forecastCalculationRequestEvent.Publish();
+    }
+
 }

@@ -8,15 +8,13 @@ namespace Budget.Application.Projections
     {
         public Forecast()
         {
-            PlannedDepositIds = new List<Guid>();
-            PlannedExpenseIds = new List<Guid>();
+            PlannedTransactionIds = new List<Guid>();
         }
         public Guid AccountId { get; set; }
         public Guid CategoryId { get; set; }
-        public List<Guid> PlannedDepositIds { get; set; }
-        public List<Guid> PlannedExpenseIds { get; set; }
         public double Amount { get; set; }
         public DateTime Date { get; set; }
         public string Notes { get; set; }
+        public List<Guid> PlannedTransactionIds { get; internal set; }
     }
 }

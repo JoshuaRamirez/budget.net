@@ -1,4 +1,5 @@
 ﻿using Budget.Application.Events.Core;
+using Budget.Application.Events.Requested.Creation;
 using Budget.Application.Projections.Core;
 using Budget.Application.Services.Creates;
 using Budget.Application.Services.Domain;
@@ -37,8 +38,7 @@ namespace Budget.Application
             DepositToPlannedDeposit.Instance.Subscribe();
             ExpenseToPayee.Instance.Subscribe();
             ExpenseToPlannedExpense.Instance.Subscribe();
-            ForecastToPlannedDeposit.Instance.Subscribe();
-            ForecastToPlannedExpense.Instance.Subscribe();
+            ForecastToPlannedTransaction.Instance.Subscribe();
             LedgerToAccount.Instance.Subscribe();
             TransactionToLedger.Instance.Subscribe();
             ProposedTransactionToPlannedTransaction.Instance.Subscribe();
@@ -69,6 +69,7 @@ namespace Budget.Application
         {
             Stop();
             Start();
+            new UserRequested().Publish();
         }
     }
 }

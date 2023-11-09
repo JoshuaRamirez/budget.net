@@ -1,10 +1,7 @@
 ﻿namespace Budget.Application.Projections.Core
 {
-    public enum Repetition
+    public enum Period
     {
-        Seconds,
-        Minutes,
-        Hours,
         Days,
         Weeks,
         Months,

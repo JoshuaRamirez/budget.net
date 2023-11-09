@@ -7,9 +7,9 @@ using System.Linq;
 
 namespace Budget.Application.Services.Links
 {
-    public class ForecastToPlannedDeposit : Linker<ForecastCreated, Forecast, PlannedDeposit>
+    public class ForecastToPlannedTransaction : Linker<ForecastCreated, Forecast, PlannedDeposit>
     {
-        public static ForecastToPlannedDeposit Instance { get; } = new ForecastToPlannedDeposit();
+        public static ForecastToPlannedTransaction Instance { get; } = new ForecastToPlannedTransaction();
         internal override List<Guid> GetSourceIds(ForecastCreated @event)
         {
             return Guids(@event.ForecastId);
@@ -17,8 +17,8 @@ namespace Budget.Application.Services.Links
 
         internal override List<Guid> GetTargetIds(List<Forecast> sources)
         {
-            var allPlannedDepositIds = sources.SelectMany(x => x.PlannedDepositIds);
-            return new List<Guid>();
+            var plannedTransactionIds = sources.SelectMany(x => x.PlannedTransactionIds);
+            return new List<Guid>(plannedTransactionIds);
         }
 
         internal override void Link(Forecast source, PlannedDeposit target)

@@ -13,11 +13,11 @@ namespace Budget.Application.Events.Requested.Creation
         public double Amount { get; set; }
         public string Description { get; set; }
         public int RepeatPeriod { get; set; }
-        public Repetition PeriodMeasurement { get; set; }
+        public Period PeriodMeasurement { get; set; }
         public int RepeatCount { get; set; }
         public DateTime StartDate { get; set; }
         public TransactionType TransactionType { get; set; }
         public Guid LedgerId { get; set; }
-        public Repetition RepeatMeasurement { get; set; }
+        public Period RepeatMeasurement { get; set; }
     }
 }

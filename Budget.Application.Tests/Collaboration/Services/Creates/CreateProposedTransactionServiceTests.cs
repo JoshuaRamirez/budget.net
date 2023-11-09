@@ -22,7 +22,7 @@ namespace Budget.Application.Tests.Collaboration.Services.Creates
             var plannedExpenseRequested = new PlannedExpenseRequested();
             plannedExpenseRequested.Amount = 10;
             plannedExpenseRequested.LedgerId = Guid.NewGuid();
-            plannedExpenseRequested.RepeatMeasurement = Repetition.Days;
+            plannedExpenseRequested.RepeatMeasurement = Period.Days;
             plannedExpenseRequested.RepeatPeriod = 1;
             plannedExpenseRequested.RepeatCount = 10;
             plannedExpenseRequested.StartDate = DateTime.Now;

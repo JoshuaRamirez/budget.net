@@ -31,18 +31,13 @@ namespace Budget.Application.Services.Domain
             days = TransactionScheduling.ApplyAmounts(days, plannedTransactions, startingBalance);
             foreach (var day in days)
             {
-                var plannedDeposits = PlannedDeposit.GetAll();
-                var plannedDepositIdsQuery = plannedDeposits.Select(plannedDeposit => plannedDeposit.Id);
-                var plannedDepositIds = plannedDepositIdsQuery.ToList();
-                var plannedExpenses = PlannedExpense.GetAll();
-                var plannedExpenseIdsQuery = plannedExpenses.Select(plannedExpense => plannedExpense.Id);
-                var plannedExpenseIds = plannedExpenseIdsQuery.ToList();
+                var plannedTransactionIdsQuery = plannedTransactions.Select(x => x.Id);
+                var plannedTransactionIds = plannedTransactionIdsQuery.ToList();
                 var forecastRequestedEvent = new ForecastRequested
                 {
                     Amount = day.Amount,
                     Date = day.Date,
-                    PlannedDepositIds = plannedDepositIds,
-                    PlannedExpenseIds = plannedExpenseIds
+                    PlannedTransactionIds = plannedTransactionIds,
                 };
                 forecastRequestedEvent.Publish();
             }

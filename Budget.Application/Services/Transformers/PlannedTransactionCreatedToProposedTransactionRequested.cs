@@ -14,7 +14,7 @@ namespace Budget.Application.Services.Transformers
             var proposedTransactionRequested = new ProposedTransactionRequested();
             var plannedTransaction = PlannedTransaction.Projections.Single(p => p.Id == plannedTransactionCreated.PlannedTransactionId);
             proposedTransactionRequested.Amount = plannedTransaction.Amount;
-            proposedTransactionRequested.Date = plannedTransaction.Date;
+            proposedTransactionRequested.Date = plannedTransaction.StartDate;
             proposedTransactionRequested.Description = plannedTransaction.Description;
             proposedTransactionRequested.PlannedTransactionId = plannedTransaction.Id;
             proposedTransactionRequested.TransactionType = plannedTransaction.TransactionType;

@@ -14,7 +14,6 @@ namespace Budget.Application.Events.Requested.Creation
         public Guid CategoryId { get; set; }
         public DateTime Date { get; set; }
         public string Notes { get; set; }
-        public List<Guid> PlannedDepositIds { get; set; }
-        public List<Guid> PlannedExpenseIds { get; set; }
+        public List<Guid> PlannedTransactionIds { get; internal set; }
     }
 }

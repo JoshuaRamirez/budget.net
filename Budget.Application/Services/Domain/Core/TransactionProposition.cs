@@ -8,11 +8,11 @@ public class TransactionProposition
         DateTime today = DateTime.Now;
         if (plannedTransaction.RepeatCount >= plannedTransaction.TimesRepeated)
         {
-            return default;
+            throw new InvalidOperationException("The planned transaction has expired.");
         }
         if (plannedTransaction.StartDate > today)
         {
-            return default;
+            throw new InvalidOperationException("The planned transaction hasn't started.");
         }
         DateTime proposedDate;
         if (plannedTransaction.ProposedTransactionIds.Count == 0)
@@ -21,9 +21,25 @@ public class TransactionProposition
         }
         else if (plannedTransaction.ProposedTransactionIds.Count > 0)
         {
-            var lastProposedTransaction = PlannedTransaction.GetLast();
+            var lastProposedTransaction = ProposedTransaction.GetLast();
             DateTime nextDate = lastProposedTransaction.Date;
-            nextDate = nextDate.AddDays(plannedTransaction.RepeatPeriod);
+            switch (plannedTransaction.RepeatMeasurement)
+            {
+                case Budget.Application.Projections.Core.Period.Days:
+                    nextDate = nextDate.AddDays(plannedTransaction.RepeatPeriod);
+                    break;
+                case Budget.Application.Projections.Core.Period.Weeks:
+                    nextDate = nextDate.AddDays(plannedTransaction.RepeatPeriod * 7);
+                    break;
+                case Budget.Application.Projections.Core.Period.Months:
+                    nextDate = nextDate.AddMonths(plannedTransaction.RepeatPeriod);
+                    break;
+                case Budget.Application.Projections.Core.Period.Years:
+                    nextDate = nextDate.AddYears(plannedTransaction.RepeatPeriod);
+                    break;
+                default:
+                    break;
+            }
             proposedDate = nextDate;
         }
         else

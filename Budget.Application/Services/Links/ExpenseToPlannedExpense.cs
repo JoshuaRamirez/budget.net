@@ -17,12 +17,12 @@ namespace Budget.Application.Services.Links
 
         internal override List<Guid> GetTargetIds(List<Expense> sources)
         {
-            return Guids(sources.Select(x => x.PlannedExpenseId));
+            return Guids(sources.Select(expense => expense.PlannedExpenseId));
         }
 
-        internal override void Link(Expense source, PlannedExpense target)
+        internal override void Link(Expense expense, PlannedExpense plannedExpense)
         {
-            target.ExpenseIds.Add(source.Id);
+            plannedExpense.ExpenseIds.Add(expense.Id);
         }
     }
 }

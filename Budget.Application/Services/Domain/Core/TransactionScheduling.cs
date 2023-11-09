@@ -26,13 +26,16 @@ namespace Budget.Application.Services.Domain.Core
                 foreach (var plannedTransaction in plannedTransactions)
                 {
                     var startDate = plannedTransaction.StartDate;
-                    if (hasPlanStarted(currentDay, startDate) &&
-                        !isRecurrenceCountReached(plannedTransaction) &&
-                        isForCurrentDay(currentDay, startDate, plannedTransaction.RepeatPeriod))
-                    {
-                        runningTotal = UpdateRunningTotal(runningTotal, plannedTransaction);
-                        incrementTimesRepeated(plannedTransaction);
-                    }
+                    if (hasPlanStarted(currentDay, startDate)) {
+                        if (!isRecurrenceCountReached(plannedTransaction)) {
+                            if (isForCurrentDay(currentDay, startDate, plannedTransaction.RepeatPeriod))
+                            {
+                                runningTotal = UpdateRunningTotal(runningTotal, plannedTransaction);
+                                incrementTimesRepeated(plannedTransaction);
+                            }
+                        }
+                    } 
+                        
                 }
                 currentDay.Amount = runningTotal;
             }

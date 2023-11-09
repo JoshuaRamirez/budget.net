@@ -21,7 +21,7 @@ namespace Budget.Application.Tests.Collaboration.Services.Creates
             @event.Amount = 100;
             @event.LedgerId = Guid.NewGuid();
             @event.RepeatCount = 1;
-            @event.RepeatMeasurement = Repetition.Days;
+            @event.RepeatMeasurement = Period.Days;
             @event.RepeatPeriod = 1;
             @event.StartDate = DateTime.Now;
             @event.Publish();
