@@ -19,5 +19,6 @@ namespace Budget.Application.Projections
         public Repetition RepeatMeasurement { get; set; }
         public int RepeatCount { get; set; }
         public DateTime StartDate { get; set; }
+        public Guid LedgerId { get; internal set; }
     }
 }

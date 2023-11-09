@@ -19,6 +19,7 @@ namespace Budget.Application.Services.Transformers
             plannedTransactionRequested.RepeatCount = plannedExpense.RepeatCount;
             plannedTransactionRequested.RepeatPeriod = plannedExpense.RepeatPeriod;
             plannedTransactionRequested.StartDate = plannedExpense.StartDate;
+            plannedTransactionRequested.TransactionType = Projections.Core.TransactionType.Expense;
             return plannedTransactionRequested;
         }) {}
     }

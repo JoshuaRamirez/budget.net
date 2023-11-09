@@ -1,4 +1,5 @@
 ﻿using Budget.Application.Projections;
+using Budget.Application.Projections.Core;
 using System;
 using System.Collections.Generic;
 
@@ -7,7 +8,7 @@ namespace Budget.Application.Services.Domain.Core
 
     public class TransactionScheduling
     {
-        public struct Day
+        public class Day
         {
             public DateTime Date { get; set; }
             public double Amount { get; set; }
@@ -56,19 +57,22 @@ namespace Budget.Application.Services.Domain.Core
                             currentDate.Day == startDate.Day;
             var differenceInDays = (currentDate - startDate).Days;
             var remainder = differenceInDays % repeatPeriod;
-            return isSameDay && remainder == 0;
+            return isSameDay || remainder == 0;
         }
 
 
         private static double UpdateRunningTotal(double runningTotal, PlannedTransaction plannedTransaction)
         {
-            if (plannedTransaction.TransactionType == "Expense")
+            switch (plannedTransaction.TransactionType)
             {
-                runningTotal -= plannedTransaction.Amount;
-            }
-            if (plannedTransaction.TransactionType == "Deposit")
-            {
-                runningTotal += plannedTransaction.Amount;
+                case TransactionType.Expense:
+                    runningTotal -= plannedTransaction.Amount;
+                    break;
+                case TransactionType.Deposit:
+                    runningTotal += plannedTransaction.Amount;
+                    break;
+                default:
+                    throw new ArgumentException("TransactionType property doesn't match");
             }
             return runningTotal;
         }

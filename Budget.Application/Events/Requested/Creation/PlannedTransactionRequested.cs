@@ -16,7 +16,6 @@ namespace Budget.Application.Events.Requested.Creation
         public Repetition PeriodMeasurement { get; set; }
         public int RepeatCount { get; set; }
         public DateTime StartDate { get; set; }
-        public string TransactionType { get; set; }
-        public Repetition RepeatMeasurement { get; internal set; }
+        public TransactionType TransactionType { get; set; }
     }
 }

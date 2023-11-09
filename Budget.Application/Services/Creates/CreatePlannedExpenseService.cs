@@ -12,14 +12,40 @@ namespace Budget.Application.Services.Creates
         public static CreatePlannedExpenseService Instance { get; } = new CreatePlannedExpenseService();
         public override void Serve(PlannedExpenseRequested @event)
         {
+            //Validate Event
+            if (@event.Amount == null)
+            {
+                throw new ArgumentException($"The {nameof(PlannedDepositRequested)} event is missing the {nameof(@event.Amount)} property.");
+            }
+            if (@event.RepeatCount == null)
+            {
+                throw new ArgumentException($"The {nameof(PlannedDepositRequested)} event is missing the {nameof(@event.RepeatCount)} property.");
+            }
+            if (@event.RepeatMeasurement == null)
+            {
+                throw new ArgumentException($"The {nameof(PlannedDepositRequested)} event is missing the {nameof(@event.RepeatMeasurement)} property.");
+            }
+            if (@event.RepeatPeriod == null)
+            {
+                throw new ArgumentException($"The {nameof(PlannedDepositRequested)} event is missing the {nameof(@event.RepeatPeriod)} property.");
+            }
+            if (@event.StartDate == null)
+            {
+                throw new ArgumentException($"The {nameof(PlannedDepositRequested)} event is missing the {nameof(@event.StartDate)} property.");
+            }
+            if (@event.LedgerId == null)
+            {
+                throw new ArgumentException($"The {nameof(PlannedDepositRequested)} event is missing the {nameof(@event.LedgerId)} property.");
+            }
             // Create Projection
             var projection = new PlannedExpense();
-            projection.Amount = @event.Amount;
+            projection.Amount = @event.Amount.Value;
             projection.ExpenseIds = new List<Guid>();
-            projection.RepeatCount = @event.RepeatCount;
-            projection.RepeatMeasurement = @event.RepeatMeasurement;
-            projection.RepeatPeriod = @event.RepeatPeriod;
-            projection.StartDate = @event.StartDate;
+            projection.RepeatCount = @event.RepeatCount.Value;
+            projection.RepeatMeasurement = @event.RepeatMeasurement.Value;
+            projection.RepeatPeriod = @event.RepeatPeriod.Value;
+            projection.StartDate = @event.StartDate.Value;
+            projection.LedgerId = @event.LedgerId.Value;
             projection.Save();
             // Publish Created Event
             var createdEvent = new PlannedExpenseCreated();

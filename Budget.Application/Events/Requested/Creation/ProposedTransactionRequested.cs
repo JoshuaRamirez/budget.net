@@ -1,4 +1,5 @@
 ﻿using Budget.Application.Events.Core;
+using Budget.Application.Projections.Core;
 using System;
 
 namespace Budget.Application.Events.Requested.Creation
@@ -13,6 +14,6 @@ namespace Budget.Application.Events.Requested.Creation
         public DateTime Date { get; set; }
         public string Description { get; set; }
         public Guid PlannedTransactionId { get; set; }
-        public string TransactionType { get; set; }
+        public TransactionType TransactionType { get; set; }
     }
 }

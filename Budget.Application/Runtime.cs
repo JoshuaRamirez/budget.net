@@ -64,5 +64,11 @@ namespace Budget.Application
             ProjectionStore.Clear();
             //TODO: Clear Event Store
         }
+
+        public static void Reset()
+        {
+            Stop();
+            Start();
+        }
     }
 }

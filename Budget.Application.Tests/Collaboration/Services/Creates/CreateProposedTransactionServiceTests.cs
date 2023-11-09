@@ -21,8 +21,10 @@ namespace Budget.Application.Tests.Collaboration.Services.Creates
             new UserRequested().Publish();
             var plannedExpenseRequested = new PlannedExpenseRequested();
             plannedExpenseRequested.Amount = 10;
+            plannedExpenseRequested.LedgerId = Guid.NewGuid();
             plannedExpenseRequested.RepeatMeasurement = Repetition.Days;
             plannedExpenseRequested.RepeatPeriod = 1;
+            plannedExpenseRequested.RepeatCount = 10;
             plannedExpenseRequested.StartDate = DateTime.Now;
             plannedExpenseRequested.Publish();
             var projection = ProposedTransaction.Projections[0];

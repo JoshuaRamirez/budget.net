@@ -10,11 +10,12 @@ namespace Budget.Application.Events.Requested.Creation
         {
             EventName = nameof(PlannedExpenseRequested);
         }
-        public double Amount { get; set; }
-        public string Description { get; set; }
-        public int RepeatPeriod { get; set; }
-        public Repetition RepeatMeasurement { get; set; }
-        public int RepeatCount { get; set; }
-        public DateTime StartDate { get; set; }
+        public double? Amount { get; set; }
+        public string? Description { get; set; }
+        public int? RepeatPeriod { get; set; }
+        public Repetition? RepeatMeasurement { get; set; }
+        public int? RepeatCount { get; set; }
+        public DateTime? StartDate { get; set; }
+        public Guid? LedgerId { get; set; }
     }
 }
