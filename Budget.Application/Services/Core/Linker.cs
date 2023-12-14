@@ -41,5 +41,4 @@ namespace Budget.Application.Services.Core
             sourceProjections.ForEach(source => targetProjections.ForEach(target => Link(source, target)));
         }
     }
-
 }
