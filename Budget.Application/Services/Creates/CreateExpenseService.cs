@@ -1,4 +1,5 @@
-﻿using Budget.Application.Events.Created;
+﻿using System;
+using Budget.Application.Events.Created;
 using Budget.Application.Events.Requested.Creation;
 using Budget.Application.Projections;
 using Budget.Application.Services.Core;
@@ -15,7 +16,7 @@ namespace Budget.Application.Services.Creates
             projection.Description = @event.Description;
             projection.LedgerId = @event.LedgerId;
             projection.PayeeId = @event.PayeeId;
-            projection.TransactionId = @event.TransactionId;
+            projection.TransactionId = Guid.NewGuid();
             projection.PlannedExpenseId = @event.PlannedExpenseId;
             projection.Save();
             // Publish Created Event

@@ -1,5 +1,6 @@
 ﻿using Budget.Application.Events.Core;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Budget.Application.Events.Created
 {
@@ -9,6 +10,9 @@ namespace Budget.Application.Events.Created
         {
             EventName = nameof(ExpenseCreated);
         }
+        [Required] // Indicates that this property must have a value
         public Guid ExpenseId { get; set; }
+        
+        
     }
 }
