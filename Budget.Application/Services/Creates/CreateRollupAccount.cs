@@ -6,10 +6,10 @@ using System;
 
 namespace Budget.Application.Services.Creates
 {
-    public class CreateAccountService : Receiver<AccountRequested>
+    public class CreateRollupAccountService : Receiver<RollupAccountRequested>
     {
-        public static CreateAccountService Instance { get; } = new CreateAccountService();
-        public override void Serve(AccountRequested @event)
+        public static CreateRollupAccountService Instance { get; } = new CreateRollupAccountService();
+        public override void Serve(Events.Requested.Creation.RollupAccountRequested @event)
         {
             // Validate Event
             if (@event.UserId == Guid.Empty)
@@ -17,13 +17,13 @@ namespace Budget.Application.Services.Creates
                 throw new ArgumentException($"The {nameof(AccountRequested)} event is missing the {nameof(@event.UserId)} property.");
             }
             // Create Projection
-            var projection = new Account();
+            var projection = new RollupAccount();
             projection.AccountName = @event.AccountName;
             projection.UserId = @event.UserId;
             // Save & Publish
             projection.Save();
-            var createdEvent = new AccountCreated();
-            createdEvent.AccountId = projection.Id;
+            var createdEvent = new RollupAccountCreated();
+            createdEvent.RollupAccountId = projection.Id;
             createdEvent.Publish();
         }
     }

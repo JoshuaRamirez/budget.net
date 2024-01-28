@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace Budget.Application.Projections
 {
-    public class User : Projection<User>
+    public class UserProjection : Projection<UserProjection>
     {
-        public User()
+        public UserProjection()
         {
             AccountIds = new List<Guid>();
             CategoryIds = new List<Guid>();

@@ -16,7 +16,7 @@ namespace Budget.Application.Tests.Collaboration.Services.Creates
         {
             var @event = new UserRequested();
             @event.Publish();
-            var projection = User.Projections[0];
+            var projection = UserProjection.Projections[0];
             Assert.NotNull(projection);
         }
     }

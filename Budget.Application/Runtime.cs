@@ -30,6 +30,7 @@ namespace Budget.Application
             CreatePlannedExpenseService.Instance.Subscribe();
             CreatePlannedTransactionService.Instance.Subscribe();
             CreateProposedTransactionService.Instance.Subscribe();
+            CreateRollupAccountService.Instance.Subscribe();
             CreateTransactionService.Instance.Subscribe();
             CreateUserService.Instance.Subscribe();
 
@@ -56,6 +57,9 @@ namespace Budget.Application
             ProposeTransactionsForTodayService.Instance.Subscribe();
             UpdateLedgerBalanceService.Instance.Subscribe();
             UpdateLedgerStartingBalanceService.Instance.Subscribe();
+            TransactionInspectionService.Instance.Subscribe();
+            LinkAccountToRollupAccountService.Instance.Subscribe();
+            UnlinkAccountFromRollupAccountService.Instance.Subscribe();
         }
 
         public static void Stop()

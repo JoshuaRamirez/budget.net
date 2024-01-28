@@ -32,7 +32,7 @@ namespace Budget.Application.Tests.Scenarios
 
             //Assert Account is Linked to User
             var account = Account.Projections.Last();
-            var user = User.Projections.Last();
+            var user = UserProjection.Projections.Last();
             Assert.Equal(account.UserId, user.Id);
             Assert.Equal(user.AccountIds.Last(), account.Id);
         }

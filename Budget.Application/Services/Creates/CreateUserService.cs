@@ -11,7 +11,7 @@ namespace Budget.Application.Services.Creates
         public override void Serve(UserRequested @event)
         {
             // Create UserProjection
-            var projection = new User();
+            var projection = new UserProjection();
             projection.UserName = @event.UserName;
             projection.Save();
             // Publish UserCreatedEvent

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Budget.Application.Services.Links
 {
-    public class AccountToUser : Linker<AccountCreated, Account, User>
+    public class AccountToUser : Linker<AccountCreated, Account, UserProjection>
     {
         public static AccountToUser Instance { get; } = new AccountToUser();
         internal override List<Guid> GetSourceIds(AccountCreated @event)
@@ -20,7 +20,7 @@ namespace Budget.Application.Services.Links
             return new List<Guid>(sources.Select(x => x.UserId));
         }
 
-        internal override void Link(Account source, User target)
+        internal override void Link(Account source, UserProjection target)
         {
             target.AccountIds.Add(source.Id);
         }
