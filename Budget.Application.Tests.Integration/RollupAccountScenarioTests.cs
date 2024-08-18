@@ -1,11 +1,12 @@
-﻿using Budget.Application;
-using Budget.Application.Events;
+﻿using Budget.Application.Events;
 using Budget.Application.Events.Requested.Creation;
 using Budget.Application.Projections;
-using Xunit;
+
+namespace Budget.Application.Tests.Integration;
+[TestClass]
 public class RollupAccountScenarioTests
 {
-    [Fact]
+    [TestMethod]
     public void ShouldAddTransactionToRollupAccountViaEvent()
     {
         Runtime.Start();
@@ -41,10 +42,11 @@ public class RollupAccountScenarioTests
 
         // Re-fetch rollup account to check if transaction was added
         rollupAccount = RollupAccount.Get(rollupAccount.Id);
-        Assert.Contains(transaction.Id, rollupAccount.LinkedTransactionIds);
+        var transactionWasAdded = rollupAccount.LinkedTransactionIds.Contains(transaction.Id);
+        Assert.IsTrue(transactionWasAdded);
     }
 
-    [Fact]
+    [TestMethod]
     public void ShouldLinkAccountToRollupAccountViaEvent()
     {
         Runtime.Start();
@@ -66,10 +68,11 @@ public class RollupAccountScenarioTests
 
         // Re-fetch rollup account to check if account was linked
         rollupAccount = RollupAccount.Get(rollupAccount.Id);
-        Assert.Contains(account.Id, rollupAccount.LinkedAccountIds);
+        var accountWasLinked = rollupAccount.LinkedAccountIds.Contains(account.Id);
+        Assert.IsTrue(accountWasLinked);
     }
 
-    [Fact]
+    [TestMethod]
     public void ShouldUnlinkAccountFromRollupAccountViaEvent()
     {
         Runtime.Start();
@@ -99,6 +102,7 @@ public class RollupAccountScenarioTests
 
         // Re-fetch rollup account to check if account was unlinked
         rollupAccount = RollupAccount.Get(rollupAccount.Id);
-        Assert.DoesNotContain(account.Id, rollupAccount.LinkedAccountIds);
+        var accountIsLinked = rollupAccount.LinkedAccountIds.Contains(account.Id);
+        Assert.IsFalse(accountIsLinked);
     }
 }
